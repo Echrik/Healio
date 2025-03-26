@@ -2,3 +2,22 @@
 @model Healio.Pages.RegisterModel
 @{
 }
+<h2>Regisztráció</h2>
+<form method="post">
+    <div>
+        <label>Email:</label>
+        <input type="email" required />
+    </div>
+    <div>
+        <label>Jelszó:</label>
+        <input type="password" required />
+    </div>
+    <div>
+        <label>Szerepkör:</label>
+        <select required>
+            <option value="patient">Páciens</option>
+            <option value="doctor">Orvos</option>
+        </select>
+    </div>
+    <button type="submit">Regisztráció</button>
+</form>

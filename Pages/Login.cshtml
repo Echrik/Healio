@@ -2,3 +2,20 @@
 @model Healio.Pages.LoginModel
 @{
 }
+
+<h2>Bejelentkezés</h2>
+<form method="post">
+    <div>
+        <label>Email:</label>
+        <input type="email" required />
+    </div>
+    <div>
+        <label>Jelszó:</label>
+        <input type="password" required />
+    </div>
+    <button type="submit">Bejelentkezés</button>
+    @if (!ModelState.IsValid)
+    {
+        <p style="color:red">@Html.ValidationSummary()</p>
+    }
+</form>
