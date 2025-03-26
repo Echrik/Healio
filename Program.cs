@@ -1,3 +1,6 @@
+using Healio.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace Healio
 {
     public class Program
@@ -8,7 +11,9 @@ namespace Healio
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-
+            builder.Services.AddDbContext<HealioDbContext>(options =>
+                options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
