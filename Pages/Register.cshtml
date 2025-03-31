@@ -1,23 +1,90 @@
 ﻿@page
 @model Healio.Pages.RegisterModel
 @{
+    ViewData["Title"] = "Regisztráció";
 }
-<h2>Regisztráció</h2>
-<form method="post">
-    <div>
-        <label>Email:</label>
-        <input type="email" required />
-    </div>
-    <div>
-        <label>Jelszó:</label>
-        <input type="password" required />
-    </div>
-    <div>
-        <label>Szerepkör:</label>
-        <select required>
-            <option value="patient">Páciens</option>
-            <option value="doctor">Orvos</option>
-        </select>
-    </div>
-    <button type="submit">Regisztráció</button>
-</form>
+<style>
+    .container {
+        background-color: #FFFFFF;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        max-width: 500px;
+        margin: 0 auto;
+        border-left: 4px solid #2A6A8F;
+    }
+
+    h2 {
+        color: #2A6A8F;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    label {
+        color: #1A3C5A;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    input, select {
+        padding: 12px;
+        border: 1px solid #E0E4E8;
+        border-radius: 8px;
+        background-color: #F4F7FA;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+        input:focus, select:focus {
+            border-color: #2A6A8F;
+            box-shadow: 0 0 8px rgba(42, 106, 143, 0.2);
+            outline: none;
+        }
+
+    button {
+        background-color: #FF6F61;
+        color: #FFFFFF;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+        button:hover {
+            background-color: #2A6A8F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+</style>
+<div class="container">
+    <h2>Regisztráció</h2>
+    <form method="post">
+        <div>
+            <label>Email:</label>
+            <input type="email" required />
+        </div>
+        <div>
+            <label>Jelszó:</label>
+            <input type="password" required />
+        </div>
+        <div>
+            <label>Szerepkör:</label>
+            <select required>
+                <option value="patient">Páciens</option>
+                <option value="doctor">Orvos</option>
+            </select>
+        </div>
+        <button type="submit">Regisztráció</button>
+    </form>
+</div>
