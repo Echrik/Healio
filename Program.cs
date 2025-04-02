@@ -14,8 +14,10 @@ namespace Healio
             builder.Services.AddDbContext<HealioDbContext>(options =>
                 options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
-            var app = builder.Build();
 
+            builder.Services.AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", options => options.LoginPath = "/Login");
+            var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
