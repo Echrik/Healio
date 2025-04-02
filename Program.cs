@@ -1,4 +1,5 @@
 using Healio.Models;
+using Healio.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Healio
@@ -17,6 +18,11 @@ namespace Healio
 
             builder.Services.AddAuthentication("CookieAuth")
                 .AddCookie("CookieAuth", options => options.LoginPath = "/Login");
+
+
+            builder.Services.AddScoped<UserService>();
+
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
