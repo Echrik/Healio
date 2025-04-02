@@ -30,5 +30,29 @@ namespace Healio.Services
 
             return true;
         }
+
+        public async Task<User> AuthenticateUserAsync(string email, string password)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                Console.WriteLine("User not found via email.. have you registered yet?");
+                return null;
+            }
+
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+
+                if (user.PasswordHash != hashedPassword)
+                {
+                    Console.WriteLine("Invalid password");
+                    return null;
+                }
+            }
+
+            return user;
+        }
     }
 }
