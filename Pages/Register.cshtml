@@ -6,15 +6,15 @@
 <form method="post">
     <div>
         <label>Email:</label>
-        <input type="email" required />
+        <input asp-for="User.Email" type="email" required />
     </div>
     <div>
         <label>Jelszó:</label>
-        <input type="password" required />
+        <input asp-for="Password" type="password" required />
     </div>
     <div>
         <label>Szerepkör:</label>
-        <select required>
+        <select asp-for="User.Role" required>
             <option value="patient">Páciens</option>
             <option value="doctor">Orvos</option>
         </select>
