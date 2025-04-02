@@ -1,0 +1,41 @@
+﻿@page
+@model Healio.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Profil";
+}
+<style>
+    .container {
+        background-color: #FFFFFF;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        color: #2A6A8F;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+        .profile-info p {
+            color: #1A3C5A;
+            font-size: 1rem;
+        }
+</style>
+<div class="container">
+    <h2>Profilom</h2>
+    <div class="profile-info">
+        <p><strong>Email:</strong> @Model.UserEmail</p>
+        <p><strong>Szerepkör:</strong> @Model.UserRole</p>
+    </div>
+</div>

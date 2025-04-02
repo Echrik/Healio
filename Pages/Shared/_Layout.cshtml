@@ -11,8 +11,16 @@
         <nav>
             <ul>
                 <li><a asp-page="/Index">Főoldal</a></li>
-                <li><a asp-page="/Register">Regisztráció</a></li>
-                <li><a asp-page="/Login">Bejelentkezés</a></li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-page="/Register">Regisztráció</a></li>
+                    <li><a asp-page="/Login">Bejelentkezés</a></li>
+                }
+                else
+                {
+                    <li><a asp-page="/Profile">Profil</a></li>
+                    <li><a asp-page="/Logout">Kijelentkezés</a></li>
+                }
             </ul>
         </nav>
     </header>
