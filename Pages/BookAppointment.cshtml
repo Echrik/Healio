@@ -2,3 +2,27 @@
 @model Healio.Pages.BookAppointmentModel
 @{
 }
+<div class="container">
+    <h2>Időpontfoglalás</h2>
+    <form>
+        <div>
+            <label>Orvos:</label>
+            <select>
+                <option value="1">Dr. Kovács Anna</option>
+                <option value="2">Dr. Nagy Péter</option>
+            </select>
+        </div>
+        <div>
+            <label>Dátum:</label>
+            <input type="date" required />
+        </div>
+        <div>
+            <label>Időpont:</label>
+            <select>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+            </select>
+        </div>
+        <button type="submit">Foglalás</button>
+    </form>
+</div>
