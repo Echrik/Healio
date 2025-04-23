@@ -38,4 +38,33 @@
         <p><strong>Email:</strong> @Model.UserEmail</p>
         <p><strong>Szerepkör:</strong> @Model.UserRole</p>
     </div>
+    @if (User.IsInRole("doctor"))
+    {
+        <button class="toggle-button" onclick="toggleForm()">Űrlap kitöltés</button>
+        <form method="post" id="doctorProfileForm" asp-page-handler="SaveDoctorProfile">
+            <div>
+                <label>Név:</label>
+                <input required/>
+                <span></span>
+            </div>
+            <div>
+                <label>Szakterület:</label>
+                <input required />
+                <span></span>
+            </div>
+            <div>
+                <label>Klinika címe:</label>
+                <textarea rows="3"></textarea>
+                <span></span>
+            </div>
+            <button type="submit">Mentés</button>
+        </form>
+    }
+</div>
+<script>
+    function toggleForm() {
+        const form = document.getElementById('doctorProfileForm');
+        form.classList.toggle('visible');
+    }
+</script>
 </div>

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Healio.Pages
@@ -12,7 +12,7 @@ namespace Healio.Pages
         public void OnGet()
         {
             UserEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
-            UserRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "patient" ? "P�ciens" : "Orvos";
+            UserRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "patient" ? "Páciens" : "Orvos";
         }
     }
 }
