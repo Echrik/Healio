@@ -21,6 +21,7 @@ namespace Healio
 
 
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<AppointmentService>();
 
 
             var app = builder.Build();

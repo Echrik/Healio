@@ -7,10 +7,7 @@
     <form>
         <div>
             <label>Orvos:</label>
-            <select>
-                <option value="1">Dr. Kovács Anna</option>
-                <option value="2">Dr. Nagy Péter</option>
-            </select>
+            <select asp-for="SelectedDoctorId" asp-items="@(new SelectList(Model.Doctors, "Id", "Name"))"></select>
         </div>
         <div>
             <label>Dátum:</label>
