@@ -83,7 +83,9 @@ Szeretnél részt venni a Healio fejlesztésében? Örömmel várjuk a pull requ
 5. Nyiss egy Pull Requestet, és mesélj róla! 😊
 
 ## Képernyőképek 📸
-- **Főoldal:** [Kép itt]
+- **Főoldal:**
+- ![image](https://github.com/user-attachments/assets/312b036a-d9f0-45b5-915e-09a97d0a54fb)
+
 - **Időpontfoglalás:** [Kép itt]
 
 ## Csatlakozz a Közösséghez! 🌐
