@@ -11,8 +11,8 @@ namespace Healio.Pages
 
         public void OnGet()
         {
-            UserEmail = User.Identity.Name; // Email a bejelentkezett felhasználótól
-            UserRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+            UserEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+            UserRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "patient" ? "Páciens" : "Orvos";
         }
     }
 }
