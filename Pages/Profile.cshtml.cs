@@ -1,12 +1,8 @@
-<<<<<<< Updated upstream
-using Microsoft.AspNetCore.Authorization;
-=======
 ï»¿using Healio.Models;
 using Healio.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> Stashed changes
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
 
@@ -46,10 +42,6 @@ namespace Healio.Pages
 
         public void OnGet()
         {
-<<<<<<< Updated upstream
-            UserEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
-            UserRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "patient" ? "Páciens" : "Orvos";
-=======
             user = _userService.GetUserByEmail(User.FindFirst(ClaimTypes.Email)?.Value);
             patient = _userService.GetPatientById(user.Id);
 
@@ -90,7 +82,6 @@ namespace Healio.Pages
             
 
             return RedirectToPage("/Index");
->>>>>>> Stashed changes
         }
     }
 }

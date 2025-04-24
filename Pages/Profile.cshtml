@@ -46,9 +46,7 @@
         <p><strong>Email:</strong> @Model.UserEmail</p>
         <p><strong>Szerepkör:</strong> @Model.UserRole</p>
     </div>
-<<<<<<< Updated upstream
 </div>
-=======
     @if (User.IsInRole("doctor"))
     {
         <button class="toggle-button" onclick="toggleForm()">Űrlap kitöltés</button>
@@ -103,4 +101,3 @@
         form.classList.toggle('show');
     }
 </script>
->>>>>>> Stashed changes
