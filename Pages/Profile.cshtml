@@ -27,10 +27,18 @@
         gap: 15px;
     }
 
-        .profile-info p {
-            color: #1A3C5A;
-            font-size: 1rem;
-        }
+    .profile-info p {
+        color: #1A3C5A;
+        font-size: 1rem;
+    }
+
+    form {
+        display: none;
+    }
+
+    form.show {
+        display: block;
+    }
 </style>
 <div class="container">
     <h2>Profilom</h2>
@@ -38,33 +46,58 @@
         <p><strong>Email:</strong> @Model.UserEmail</p>
         <p><strong>Szerepkör:</strong> @Model.UserRole</p>
     </div>
+</div>
     @if (User.IsInRole("doctor"))
     {
         <button class="toggle-button" onclick="toggleForm()">Űrlap kitöltés</button>
-        <form method="post" id="doctorProfileForm" asp-page-handler="SaveDoctorProfile">
+        <a asp-page-handler="FillFormDoctor" asp-route-userEmail="@Model.UserEmail">Fill form</a>
+        <form method="post" class="ProfileForm" asp-page-handler="SaveDoctorProfile">
             <div>
                 <label>Név:</label>
-                <input required/>
+                <input asp-for="name" required />
                 <span></span>
             </div>
             <div>
                 <label>Szakterület:</label>
-                <input required />
+                <input asp-for="specialization" required />
                 <span></span>
             </div>
             <div>
                 <label>Klinika címe:</label>
-                <textarea rows="3"></textarea>
+                <textarea asp-for="clinicAddress" rows="3" required></textarea>
                 <span></span>
             </div>
             <button type="submit">Mentés</button>
         </form>
     }
+	@if (User.IsInRole("patient"))
+	{
+        <button class="toggle-button" onclick="toggleForm()">Űrlap kitöltés</button>
+        <a asp-page-handler="FillFormPatient" asp-route-userEmail="@Model.UserEmail">Fill form</a>
+        <form method="post" class="ProfileForm" asp-page-handler="SavePatientProfile">
+            <div>
+                <label>Név:</label>
+                <input asp-for="name" required />
+                <span></span>
+            </div>
+            <div>
+                <label>Születési idő:</label>
+                <input asp-for="date_of_birth" type="date" value="@DateTime.Now" required />
+                <span></span>
+            </div>
+            <div>
+                <label>Betegségi előzmény:</label>
+                <textarea asp-for="medical_history" rows="3" required></textarea>
+                <span></span>
+            </div>
+            <button type="submit">Mentés</button>
+        </form>
+	}
 </div>
 <script>
     function toggleForm() {
-        const form = document.getElementById('doctorProfileForm');
-        form.classList.toggle('visible');
+        console.log("asd123123");
+        const form = document.querySelector('.ProfileForm');
+        form.classList.toggle('show');
     }
 </script>
-</div>

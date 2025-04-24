@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 using Healio.Models;
@@ -53,6 +54,30 @@ namespace Healio.Services
             }
 
             return user;
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.Where(u => u.Email == email).FirstOrDefault();
+        }
+        public DoctorProfile GetDoctorById(int id)
+        {
+            return _context.DoctorProfiles.Find(id);
+        }
+        public PatientProfile GetPatientById(int id)
+        {
+            return _context.PatientProfiles.Find(id);
+        }
+
+        public bool RegisterDoctor(DoctorProfile docprof)
+        {
+            _context.DoctorProfiles.Add(docprof);
+            return _context.SaveChanges() > 0;
+        }
+        public bool RegisterPatient(PatientProfile patprof)
+        {
+            _context.PatientProfiles.Add(patprof);
+            return _context.SaveChanges() > 0;
         }
     }
 }

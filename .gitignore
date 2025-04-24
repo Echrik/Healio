@@ -360,6 +360,6 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
+
 FodyWeavers.xsd
-/Pages/_ViewImports.cshtml
 /Pages/_ViewImports.cshtml
