@@ -360,4 +360,11 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
+<<<<<<< Updated upstream
 FodyWeavers.xsd
+=======
+FodyWeavers.xsd
+/Pages/_ViewImports.cshtml
+/Pages/_ViewImports.cshtml
+/Pages/_ViewImports.cshtml
+>>>>>>> Stashed changes

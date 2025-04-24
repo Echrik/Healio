@@ -22,10 +22,19 @@ namespace Healio
 
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<AppointmentService>();
-
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
+
+
+            if (app.Environment.IsDevelopment())
+            {
+                Console.WriteLine("asd");
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");

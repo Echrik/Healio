@@ -31,7 +31,8 @@ namespace Healio.Pages
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "CookieAuth");
