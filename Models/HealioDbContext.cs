@@ -38,6 +38,5 @@ namespace Healio.Models
             modelBuilder.Entity<Appointment>()
                 .HasIndex(a => a.DoctorId);
         }
-
     }
 }
