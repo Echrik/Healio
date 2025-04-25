@@ -11,6 +11,12 @@ namespace Healio.Pages
     [Authorize]
     public class ProfileModel : PageModel
     {
+        private class PublicUserDTO {
+            public string Name { get; set; }
+            public string Email { get; set; }
+            public string Role { get; set; }
+        }
+
         private readonly UserService _userService;
         private User user { get; set; }
         private PatientProfile patient { get; set; }
@@ -53,9 +59,9 @@ namespace Healio.Pages
         {
             user = _userService.GetUserByEmail(userEmail);
             DoctorProfile doc = _userService.GetDoctorById(user.Id);
-            if (doc.Name != null)
+            if (user.Name != null)
             {
-                name = doc.Name;
+                name = user.Name;
                 specialization = doc.Specialization;
                 clinicAddress = doc.ClinicAddress;
             }
@@ -69,14 +75,14 @@ namespace Healio.Pages
             {
                 if (_userService.GetDoctorById(user.Id) == null)
                 {
-                    _userService.RegisterDoctor(new DoctorProfile { Name = name, ClinicAddress = clinicAddress, Specialization = specialization, UserId = user.Id, User = user });
+                    _userService.RegisterDoctor(new DoctorProfile { ClinicAddress = clinicAddress, Specialization = specialization, UserId = user.Id, User = user });
                 }
             }
             else
             {
                 if (_userService.GetPatientById(user.Id) == null)
                 {
-                    _userService.RegisterPatient(new PatientProfile { Name = name, DateOfBirth = date_of_birth, MedicalHistory = medical_history, UserId = user.Id, User = user });
+                    _userService.RegisterPatient(new PatientProfile { DateOfBirth = date_of_birth, MedicalHistory = medical_history, UserId = user.Id, User = user });
                 }
             }
             
