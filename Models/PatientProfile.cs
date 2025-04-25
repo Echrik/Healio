@@ -9,9 +9,6 @@ namespace Healio.Models
         [Required]
         [Column("user_id")]
         public int UserId { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
         [Column("date_of_birth")]
         public DateTime? DateOfBirth { get; set; }
         [StringLength(1000)]

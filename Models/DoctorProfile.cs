@@ -11,9 +11,6 @@ namespace Healio.Models
         public int UserId { get; set; }
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Specialization { get; set; }
         [StringLength(200)]
         [Column("clinic_address")]
