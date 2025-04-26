@@ -19,4 +19,3 @@ namespace Healio.Models
         public User User { get; set; }
     }
 }
-
