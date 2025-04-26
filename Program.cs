@@ -1,4 +1,5 @@
 using Healio.Models;
+using Healio.Models.MappingProfiles;
 using Healio.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,7 @@ namespace Healio
             builder.Services.AddScoped<AppointmentService>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAutoMapper(typeof(Program));
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
