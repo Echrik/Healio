@@ -1,9 +1,12 @@
-﻿using Healio.Models;
+﻿using AutoMapper;
+using Healio.Models;
+using Healio.Models.DTO;
 using Healio.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace Healio.Pages
@@ -11,82 +14,71 @@ namespace Healio.Pages
     [Authorize]
     public class ProfileModel : PageModel
     {
-        private class PublicUserDTO {
-            public string Name { get; set; }
-            public string Email { get; set; }
-            public string Role { get; set; }
-        }
-
+        private readonly IMapper _mapper;
         private readonly UserService _userService;
-        private User user { get; set; }
-        private PatientProfile patient { get; set; }
-        public string UserEmail { get; set; }
-        public string UserRole { get; set; }
-
-        // Doctor-specific properties
-        [BindProperty]
-        public string specialization { get; set; }
-        [BindProperty]
-        public string clinicAddress { get; set; }
-        [BindProperty]
-        public string name { get; set; }
-
-        // Patient-specific properties
-        [BindProperty]
-        public string PatName { get; set; }
-        [BindProperty]
-        public DateTime date_of_birth { get; set; }
-        [BindProperty]
-        public string medical_history { get; set; }
-
-        public int counter { get; set; } = 0;
-
-        public ProfileModel(UserService userService)
+        public ProfileModel(UserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
+            docDTO = new PublicDoctorDTO();
+            patDTO = new PublicPatientDTO();
         }
+        [BindProperty]
+        public PublicUserDTO userDTO { get; set; }
+        [BindProperty]
+        public PublicDoctorDTO docDTO { get; set; }
+        [BindProperty]
+        public PublicPatientDTO patDTO { get; set; }
+        public User user { get; set; }
 
         public void OnGet()
         {
-            user = _userService.GetUserByEmail(User.FindFirst(ClaimTypes.Email)?.Value);
-            patient = _userService.GetPatientById(user.Id);
-
-            UserEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            UserRole = User.FindFirst(ClaimTypes.Role)?.Value == "doctor" ? "Orvos" : "Páciens";
+            FetchUser();
+            FetchDTOs();
         }
 
-        public void OnGetFillFormDoctor(string userEmail)
+        private void FetchUser()
         {
-            user = _userService.GetUserByEmail(userEmail);
-            DoctorProfile doc = _userService.GetDoctorById(user.Id);
-            if (user.Name != null)
-            {
-                name = user.Name;
-                specialization = doc.Specialization;
-                clinicAddress = doc.ClinicAddress;
-            }
+            user = _userService.GetUserByEmail(User.FindFirst(ClaimTypes.Email)?.Value);
+            if (user != null)
+                userDTO = _mapper.Map<PublicUserDTO>(user);
 
+        }
+
+        public void FetchDTOs() {
+            var pat = _userService.GetPatientByUserId(user.Id);
+            var doc = _userService.GetDoctorByUserId(user.Id);
+            
+            if (doc != null)
+                docDTO = _mapper.Map<PublicDoctorDTO>(doc);
+            if (pat != null)
+                patDTO = _mapper.Map<PublicPatientDTO>(pat);
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            user = _userService.GetUserByEmail(User.FindFirst(ClaimTypes.Email)?.Value);
+            FetchUser();
             if (User.FindFirst(ClaimTypes.Role)?.Value == "doctor")
             {
-                if (_userService.GetDoctorById(user.Id) == null)
+                if (_userService.GetDoctorByUserId(user.Id) == null)
                 {
-                    _userService.RegisterDoctor(new DoctorProfile { ClinicAddress = clinicAddress, Specialization = specialization, UserId = user.Id, User = user });
+                    _userService.RegisterDoctor(new DoctorProfile { ClinicAddress = docDTO.ClinicAddress, Specialization = docDTO.Specialization, UserId = user.Id, User = user });
+                }
+                if(!docDTO.ClinicAddress.IsNullOrEmpty() && !docDTO.Specialization.IsNullOrEmpty())
+                {
+                    _userService.UpdateDoctorProfile(user.Id, docDTO.ClinicAddress, docDTO.Specialization);
                 }
             }
             else
             {
-                if (_userService.GetPatientById(user.Id) == null)
+                if (_userService.GetPatientByUserId(user.Id) == null)
                 {
-                    _userService.RegisterPatient(new PatientProfile { DateOfBirth = date_of_birth, MedicalHistory = medical_history, UserId = user.Id, User = user });
+                    _userService.RegisterPatient(new PatientProfile { DateOfBirth = patDTO.DateOfBirth, MedicalHistory = patDTO.MedicalHistory, UserId = user.Id, User = user });
+                }
+                if (!patDTO.MedicalHistory.IsNullOrEmpty()){
+                    _userService.UpdatePatientMedicalHistory(user.Id, patDTO.MedicalHistory, patDTO.DateOfBirth);
                 }
             }
-            
-
             return RedirectToPage("/Index");
         }
     }
