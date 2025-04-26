@@ -12,11 +12,13 @@ namespace Healio.Pages
         public User User { get; set; }
         [BindProperty]
         public string Password { get; set; }
+        public string Name { get; set; }
         public RegisterModel(UserService userService)
         {
             _userService = userService;
             User = new User();
             Password = "";
+            Name = "";
         }
 
         public void OnGet()
@@ -25,7 +27,7 @@ namespace Healio.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var result = await _userService.RegisterUserAsync(User, Password);
+            var result = _userService.RegisterUser(User, Password, Name);
             if (!result)
             {
                 ModelState.AddModelError(string.Empty, "User with this email already exists.");
