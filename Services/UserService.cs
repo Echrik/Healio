@@ -15,19 +15,20 @@ namespace Healio.Services
             _context = context;
         }
 
-        public async Task<bool> RegisterUserAsync(User user, string password)
+        public bool RegisterUser(User user, string password, string name)
         {
-            if (await _context.Users.AnyAsync(u => u.Email == user.Email))
+            if (_context.Users.Any(u => u.Email == user.Email))
                 return false;
 
             using (var sha256 = SHA256.Create())
             {
                 var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
                 user.PasswordHash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                user.Name = name;
             }
 
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return true;
         }
@@ -64,9 +65,20 @@ namespace Healio.Services
         {
             return _context.DoctorProfiles.Find(id);
         }
+        
+        public DoctorProfile GetDoctorByUserId(int id)
+        {
+            return _context.DoctorProfiles.Where(d => d.UserId == id).FirstOrDefault();
+        }
+
         public PatientProfile GetPatientById(int id)
         {
             return _context.PatientProfiles.Find(id);
+        }
+
+        public PatientProfile GetPatientByUserId(int id)
+        {
+            return _context.PatientProfiles.Where(p => p.UserId == id).FirstOrDefault();
         }
 
         public bool RegisterDoctor(DoctorProfile docprof)
@@ -78,6 +90,34 @@ namespace Healio.Services
         {
             _context.PatientProfiles.Add(patprof);
             return _context.SaveChanges() > 0;
+        }
+
+        internal void UpdatePatientMedicalHistory(int id, string medicalHistory, DateTime dateOfBirth)
+        {
+            var patient = _context.PatientProfiles.FirstOrDefault(p => p.UserId == id);
+            if (patient == null)
+            {
+                return;
+            }
+            Console.WriteLine($"{medicalHistory} {dateOfBirth}");
+            patient.MedicalHistory = medicalHistory;
+            patient.DateOfBirth = dateOfBirth;
+            _context.PatientProfiles.Update(patient);
+            _context.SaveChanges();
+        }
+
+        internal void UpdateDoctorProfile(int id, string clinicAddress, string specialization)
+        {
+            var doctor = _context.DoctorProfiles.FirstOrDefault(p => p.UserId == id);
+            if (doctor == null)
+            {
+                return;
+            }
+            Console.WriteLine($"{clinicAddress} {specialization}");
+            doctor.ClinicAddress = clinicAddress;
+            doctor.Specialization = specialization;
+            _context.DoctorProfiles.Update(doctor);
+            _context.SaveChanges();
         }
     }
 }
