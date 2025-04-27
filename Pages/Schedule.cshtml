@@ -1,0 +1,68 @@
+﻿@page
+@model Healio.Pages.ScheduleModel
+@{
+    ViewData["Title"] = "Add Schedule";
+
+    var dayOrder = new Dictionary<string, int>
+    {
+        { "Monday", 1 },
+        { "Tuesday", 2 },
+        { "Wednesday", 3 },
+        { "Thursday", 4 },
+        { "Friday", 5 },
+        { "Saturday", 6 },
+        { "Sunday", 7 }
+    };
+}
+
+<h2>Add Doctor Schedule</h2>
+
+<form method="post">
+    <div>
+        <label for="dayOfWeek">Day of the Week:</label>
+        <select id="dayOfWeek" asp-for="DayOfWeek" required>
+            @foreach (var day in Model.DaysOfWeek)
+            {
+                <option value="@day">@day</option>
+            }
+        </select>
+        <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="startTime">Start Time:</label>
+        <input id="startTime" type="time" asp-for="StartTime" required />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label for="endTime">End Time:</label>
+        <input id="endTime" type="time" asp-for="EndTime" required />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Save Schedule</button>
+</form>
+
+@if(Model.Schedules.Count() != 0){
+    <table style="width:100%">
+        <tr>
+            <th>Nap</th>
+            <th>Mettől</th>
+            <th>Meddig</th>
+        </tr>
+        @foreach (var s in Model.Schedules.OrderBy(x => dayOrder[x.DayOfWeek]).ToList())
+        {
+            <tr>
+                <td>@s.DayOfWeek</td>
+                <td>@s.StartTime.ToString("hh\\:mm")</td>
+                <td>@s.EndTime.ToString("hh\\:mm")</td>
+                <td><b><a asp-page-handler="DeleteSchedule" asp-route-day="@s.DayOfWeek">X</a></b></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+	<p>No schedules available.</p>
+}
