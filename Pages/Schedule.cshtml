@@ -66,3 +66,50 @@ else
 {
 	<p>No schedules available.</p>
 }
+
+<script type="text/javascript">
+    const startTime = document.getElementById("startTime");
+    const endTime = document.getElementById("endTime");
+
+    function roundTimeInput(event) {
+        const input = event.target;
+        let [hour, minute] = input.value.split(':').map(Number);
+
+        if (minute === 0) {
+            return;
+        } else if (minute < 30) {
+            minute = 30;
+        } else {
+            minute = 0;
+            hour = (hour + 1) % 24;
+        }
+      input.value = String(hour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
+    }
+
+
+
+	startTime.addEventListener('change', roundTimeInput);
+	endTime.addEventListener('change', roundTimeInput);
+	endTime.addEventListener('change', e => {
+        const input = e.target;
+        let [hour, minute] = input.value.split(':').map(Number);
+        let [sHour, sMinute] = startTime.value.split(':').map(Number);
+
+		if (hour < sHour) {
+            input.value = String(sHour).padStart(2, '0') + ':' + String(sMinute).padStart(2, '0');
+		}
+    });
+    startTime.addEventListener('change', e => {
+        const input = e.target;
+        let [hour, minute] = input.value.split(':').map(Number);
+        let [eHour, eMinute] = endTime.value.split(':').map(Number);
+
+        if (hour > eHour) {
+            input.value = String(eHour).padStart(2, '0') + ':' + String(eMinute).padStart(2, '0');
+		}
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        endTime.value = '23:30';
+    });
+
+</script>
