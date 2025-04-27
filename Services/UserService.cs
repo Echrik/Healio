@@ -65,10 +65,14 @@ namespace Healio.Services
         {
             return _context.DoctorProfiles.Find(id);
         }
-        
         public DoctorProfile GetDoctorByUserId(int id)
         {
             return _context.DoctorProfiles.Where(d => d.UserId == id).FirstOrDefault();
+        }
+
+        public DoctorProfile GetDoctorByUserId(string id)
+        {
+            return _context.DoctorProfiles.Where(d => d.UserId.ToString() == id).FirstOrDefault();
         }
 
         public PatientProfile GetPatientById(int id)
@@ -118,6 +122,21 @@ namespace Healio.Services
             doctor.Specialization = specialization;
             _context.DoctorProfiles.Update(doctor);
             _context.SaveChanges();
+        }
+
+        public bool AddSchedule(DoctorSchedule schedule)
+        {
+            _context.DoctorSchedules.Add(schedule);
+            return _context.SaveChanges() > 0;
+        }
+        public List<DoctorSchedule> GetSchedulesByDoctorId(int id)
+        {
+            return _context.DoctorSchedules.Where(s => s.DoctorId == id).ToList();
+        }
+
+        public bool DeleteScheduleByDay(string day)
+        {
+            return _context.DoctorSchedules.Where(s => s.DayOfWeek == day).ExecuteDelete() > 0;
         }
     }
 }
