@@ -1,7 +1,7 @@
 ﻿@page
 @model Healio.Pages.ScheduleModel
 @{
-    ViewData["Title"] = "Add Schedule";
+    ViewData["Title"] = "Időpontbeosztás";
 
     var dayOrder = new Dictionary<string, int>
     {
@@ -15,101 +15,110 @@
     };
 }
 
-<h2>Add Doctor Schedule</h2>
-
-<form method="post">
-    <div>
-        <label for="dayOfWeek">Day of the Week:</label>
-        <select id="dayOfWeek" asp-for="DayOfWeek" required>
-            @foreach (var day in Model.DaysOfWeek)
-            {
-                <option value="@day">@day</option>
-            }
-        </select>
-        <span asp-validation-for="DayOfWeek" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label for="startTime">Start Time:</label>
-        <input id="startTime" type="time" asp-for="StartTime" required />
-        <span asp-validation-for="StartTime" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label for="endTime">End Time:</label>
-        <input id="endTime" type="time" asp-for="EndTime" required />
-        <span asp-validation-for="EndTime" class="text-danger"></span>
-    </div>
-
-    <button type="submit">Save Schedule</button>
-</form>
-
-@if(Model.Schedules.Count() != 0){
-    <table style="width:100%">
-        <tr>
-            <th>Nap</th>
-            <th>Mettől</th>
-            <th>Meddig</th>
-        </tr>
-        @foreach (var s in Model.Schedules.OrderBy(x => dayOrder[x.DayOfWeek]).ToList())
-        {
-            <tr>
-                <td>@s.DayOfWeek</td>
-                <td>@s.StartTime.ToString("hh\\:mm")</td>
-                <td>@s.EndTime.ToString("hh\\:mm")</td>
-                <td><b><a asp-page-handler="DeleteSchedule" asp-route-day="@s.DayOfWeek">X</a></b></td>
-            </tr>
-        }
-    </table>
-}
-else
-{
-	<p>No schedules available.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/schedule.css" />
 }
 
-<script type="text/javascript">
-    const startTime = document.getElementById("startTime");
-    const endTime = document.getElementById("endTime");
+<div class="schedule-container">
+    <h2>Időpontbeosztás Hozzáadása</h2>
 
-    function roundTimeInput(event) {
-        const input = event.target;
-        let [hour, minute] = input.value.split(':').map(Number);
+    <form method="post" class="schedule-form">
+        <div>
+            <label for="dayOfWeek">Nap:</label>
+            <select id="dayOfWeek" asp-for="DayOfWeek" required>
+                @foreach (var day in Model.DaysOfWeek)
+                {
+                    <option value="@day">@day</option>
+                }
+            </select>
+            <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+        </div>
 
-        if (minute === 0) {
-            return;
-        } else if (minute < 30) {
-            minute = 30;
-        } else {
-            minute = 0;
-            hour = (hour + 1) % 24;
-        }
-      input.value = String(hour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
+        <div>
+            <label for="startTime">Kezdés:</label>
+            <input id="startTime" type="time" asp-for="StartTime" required />
+            <span asp-validation-for="StartTime" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label for="endTime">Befejezés:</label>
+            <input id="endTime" type="time" asp-for="EndTime" required />
+            <span asp-validation-for="EndTime" class="text-danger"></span>
+        </div>
+
+        <button type="submit">Mentés</button>
+    </form>
+
+    @if (Model.Schedules.Count() > 0)
+    {
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>Nap</th>
+                    <th>Kezdés</th>
+                    <th>Befejezés</th>
+                    <th>Törlés</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model.Schedules.OrderBy(x => dayOrder[x.DayOfWeek]))
+                {
+                    <tr>
+                        <td>@s.DayOfWeek</td>
+                        <td>@s.StartTime.ToString("hh\\:mm")</td>
+                        <td>@s.EndTime.ToString("hh\\:mm")</td>
+                        <td><a asp-page-handler="DeleteSchedule" asp-route-day="@s.DayOfWeek">🗑️</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
+    else
+    {
+        <p class="no-schedules">Nincs még felvitt időpont.</p>
+    }
+</div>
 
+@section Scripts {
+    <script>
+        const startTime = document.getElementById("startTime");
+        const endTime = document.getElementById("endTime");
 
+        function roundTimeInput(event) {
+            const input = event.target;
+            let [hour, minute] = input.value.split(':').map(Number);
 
-	startTime.addEventListener('change', roundTimeInput);
-	endTime.addEventListener('change', roundTimeInput);
-	endTime.addEventListener('change', e => {
-        const input = e.target;
-        let [hour, minute] = input.value.split(':').map(Number);
-        let [sHour, sMinute] = startTime.value.split(':').map(Number);
+            if (minute < 30) {
+                minute = 30;
+            } else {
+                minute = 0;
+                hour = (hour + 1) % 24;
+            }
 
-		if (hour < sHour) {
-            input.value = String(sHour).padStart(2, '0') + ':' + String(sMinute).padStart(2, '0');
-		}
-    });
-    startTime.addEventListener('change', e => {
-        const input = e.target;
-        let [hour, minute] = input.value.split(':').map(Number);
-        let [eHour, eMinute] = endTime.value.split(':').map(Number);
+            input.value = String(hour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
+        }
 
-        if (hour > eHour) {
-            input.value = String(eHour).padStart(2, '0') + ':' + String(eMinute).padStart(2, '0');
-		}
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-        endTime.value = '23:30';
-    });
+        startTime.addEventListener('change', roundTimeInput);
+        endTime.addEventListener('change', roundTimeInput);
 
-</script>
+        endTime.addEventListener('change', e => {
+            const [eHour, eMin] = e.target.value.split(':').map(Number);
+            const [sHour, sMin] = startTime.value.split(':').map(Number);
+            if (eHour < sHour || (eHour === sHour && eMin <= sMin)) {
+                e.target.value = startTime.value;
+            }
+        });
+
+        startTime.addEventListener('change', e => {
+            const [sHour, sMin] = e.target.value.split(':').map(Number);
+            const [eHour, eMin] = endTime.value.split(':').map(Number);
+            if (sHour > eHour || (sHour === eHour && sMin >= eMin)) {
+                e.target.value = endTime.value;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            endTime.value = '23:30';
+        });
+    </script>
+}

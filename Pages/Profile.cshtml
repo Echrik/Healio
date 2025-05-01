@@ -6,44 +6,12 @@
 	var (specialization, clinicAddress) = Model.docDTO;
 	var (dateOfBirth, medicalHistory) = Model.patDTO;
 }
-<style>
-	.container {
-		background-color: #FFFFFF;
-		padding: 30px;
-		border-radius: 8px;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-		max-width: 600px;
-		margin: 0 auto;
-	}
 
-	h2 {
-		color: #2A6A8F;
-		text-align: center;
-		margin-bottom: 20px;
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
+@section Styles {
+	<link rel="stylesheet" href="~/css/profile.css" />
+}
 
-	.profile-info {
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-	}
-
-		.profile-info p {
-			color: #1A3C5A;
-			font-size: 1rem;
-		}
-
-	/*     form {
-			display: none;
-		}
-
-		form.show {
-			display: block;
-		} */
-</style>
-<div class="container">
+<div class="profile-container">
 	<h2>Profilom</h2>
 	<div class="profile-info">
 		<p><strong>Email:</strong> @email</p>
@@ -51,42 +19,29 @@
 		<p><strong>Név:</strong> @name</p>
 	</div>
 </div>
+
 @if (User.IsInRole("doctor"))
 {
-	<form method="post" class="ProfileForm" asp-page-handler="SaveDoctorProfile">
-		<div>
-			<label>Szakterület:</label>
-			<input asp-for="docDTO.Specialization" value="@specialization" required />
-			<span></span>
-		</div>
-		<div>
-			<label>Klinika címe:</label>
-			<textarea asp-for="docDTO.ClinicAddress" rows="3" value="@clinicAddress" required></textarea>
-			<span></span>
-		</div>
+	<form method="post" class="profile-form" asp-page-handler="SaveDoctorProfile">
+		<label>Szakterület:</label>
+		<input asp-for="docDTO.Specialization" value="@specialization" required />
+
+		<label>Klinika címe:</label>
+		<textarea asp-for="docDTO.ClinicAddress" rows="3" required>@clinicAddress</textarea>
+
 		<button type="submit">Mentés</button>
 	</form>
 }
+
 @if (User.IsInRole("patient"))
 {
-	<form method="post" class="ProfileForm" asp-page-handler="SavePatientProfile">
-		<div>
-			<label>Születési idő:</label>
-			<input asp-for="patDTO.DateOfBirth" type="date" value="@(dateOfBirth.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd"))" required />
-			<span></span>
-		</div>
-		<div>
-			<label>Betegségi előzmény:</label>
-			<textarea asp-for="patDTO.MedicalHistory" rows="3" value="@medicalHistory" required></textarea>
-			<span></span>
-		</div>
+	<form method="post" class="profile-form" asp-page-handler="SavePatientProfile">
+		<label>Születési idő:</label>
+		<input asp-for="patDTO.DateOfBirth" type="date" value="@(dateOfBirth.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd"))" required />
+
+		<label>Betegségi előzmény:</label>
+		<textarea asp-for="patDTO.MedicalHistory" rows="3" required>@medicalHistory</textarea>
+
 		<button type="submit">Mentés</button>
 	</form>
 }
-<script>
-	function toggleForm() {
-		console.log("asd123123");
-		const form = document.querySelector('.ProfileForm');
-		form.classList.toggle('show');
-	}
-</script>

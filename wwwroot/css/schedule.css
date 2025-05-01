@@ -1,0 +1,110 @@
+﻿.schedule-container {
+    background-color: #263238;
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #2E7D32;
+    max-width: 800px;
+    margin: 30px auto;
+    color: #E0E0E0;
+}
+
+    .schedule-container h2 {
+        color: #4CAF50;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2rem;
+    }
+
+.schedule-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+    .schedule-form label {
+        color: #A5D6A7;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .schedule-form select,
+    .schedule-form input {
+        background-color: #37474F;
+        color: #E0E0E0;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+        .schedule-form input:focus,
+        .schedule-form select:focus {
+            outline: 2px solid #4CAF50;
+        }
+
+    .schedule-form button {
+        background-color: #2E7D32;
+        color: #FFFFFF;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .schedule-form button:hover {
+            background-color: #4CAF50;
+        }
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1E2A38;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 12px 15px;
+        text-align: center;
+        color: #E0E0E0;
+        border-bottom: 1px solid #455A64;
+    }
+
+    .schedule-table th {
+        background-color: #2E7D32;
+        color: white;
+        font-weight: bold;
+    }
+
+    .schedule-table td a {
+        color: #EF5350;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .schedule-table td a:hover {
+            color: #FF7043;
+        }
+
+.no-schedules {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #B0BEC5;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .schedule-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .schedule-form button {
+        width: 100%;
+    }
+}
