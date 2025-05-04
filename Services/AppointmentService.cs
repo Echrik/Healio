@@ -1,6 +1,7 @@
 ﻿using Healio.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Healio.Services
 {
@@ -37,22 +38,12 @@ namespace Healio.Services
             return availableTimes;
         }
 
-        //public async Task<bool> BookAppointmentAsync(Appointment appointment)
-        //{
-        //    // Check if the time slot is still available
-        //    var existingAppointment = await _context.Appointments
-        //        .FirstOrDefaultAsync(a => a.DoctorId == appointment.DoctorId &&
-        //                                  a.Date == appointment.Date &&
-        //                                  a.Time == appointment.Time);
-
-        //    if (existingAppointment != null)
-        //    {
-        //        return false; // Time slot already booked
-        //    }
-
-        //    _context.Appointments.Add(appointment);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
+        public bool BookAppointment(Appointment appointment)
+        {
+            if (_context.Appointments.Contains(appointment))
+                return false;
+            _context.Appointments.Add(appointment);
+            return _context.SaveChanges() > 0;
+        }
     }
 }
