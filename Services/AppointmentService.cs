@@ -35,6 +35,8 @@ namespace Healio.Services
                 availableTimes.Add(time);
             }
 
+            availableTimes.RemoveAll(t => _context.Appointments.Any(a => a.DoctorId == docId && a.AppointmentDate.TimeOfDay == t && a.Status == "pending"));
+
             return availableTimes;
         }
 
