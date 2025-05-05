@@ -1,0 +1,20 @@
+﻿@page
+@model MessagesModel
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/chat.css" />
+}
+
+<div class="chat-box" style="max-width: 500px;">
+    <select id="partner-select" class="form-control mb-2"></select>
+    <div id="chat-messages" style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
+    <form id="chat-form" class="mt-2 d-flex">
+        <input type="text" id="chat-input" class="form-control me-2" placeholder="Írj üzenetet..." required />
+        <button type="submit" class="btn btn-primary">Küldés</button>
+    </form>
+</div>
+
+
+}
