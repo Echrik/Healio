@@ -86,7 +86,9 @@ Szeretnél részt venni a Healio fejlesztésében? Örömmel várjuk a pull requ
 - **Főoldal:**
 ![image](https://github.com/user-attachments/assets/312b036a-d9f0-45b5-915e-09a97d0a54fb)
 
-- **Időpontfoglalás:** [Kép itt]
+- **Időpontfoglalás:**
+![image](https://github.com/user-attachments/assets/696fecbd-f6b9-4c09-b4b4-48d2270691cf)
+
 
 ## Csatlakozz a Közösséghez! 🌐
 - Twitter: [@HealioHealth](https://twitter.com/HealioHealth)
