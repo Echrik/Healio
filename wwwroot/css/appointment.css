@@ -1,0 +1,62 @@
+﻿.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #263238;
+    color: #E0E0E0;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+    text-align: center;
+    color: #A5D6A7;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+select,
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #2E7D32;
+    background-color: #37474F;
+    color: #E0E0E0;
+    font-size: 1rem;
+}
+
+select:focus,
+input[type="date"]:focus {
+    outline: 2px solid #4CAF50;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #4CAF50;
+}
