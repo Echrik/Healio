@@ -5,16 +5,36 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/index.css" />
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true"/>
 }
 
 <div class="hero">
-    <h1>Üdvözöllek a Healio-ban!</h1>
-    <p>
-        Modern E-Egészségügyi alkalmazás időpontfoglaláshoz, egészségügyi adatkezeléshez és orvosokkal való kapcsolattartáshoz.
-    </p>
-    <div class="cta-buttons">
-        <a asp-page="/Register">Regisztrálj</a>
-        <a asp-page="/Login">Bejelentkezés</a>
+    <div class="hero-content">
+        <h1 class="animate-title">Üdvözöllek a Healio-ban!</h1>
+        <p class="animate-text">
+            Modern E-Egészségügyi alkalmazás időpontfoglaláshoz, egészségügyi adatkezeléshez és orvosokkal való kapcsolattartáshoz.
+        </p>
+        <div class="cta-buttons animate-buttons">
+            <a asp-page="/Register" class="btn">Regisztrálj</a>
+            <a asp-page="/Login" class="btn">Bejelentkezés</a>
+        </div>
     </div>
 </div>
+
+<section class="info-cards">
+    <div class="card animate-card">
+        <span class="icon">📅</span>
+        <h3>Időpontfoglalás</h3>
+        <p>Könnyedén foglalhatsz időpontot orvosodhoz néhány kattintással.</p>
+    </div>
+    <div class="card animate-card">
+        <span class="icon">🔒</span>
+        <h3>Adatbiztonság</h3>
+        <p>Egészségügyi adataidat a legmagasabb szintű védelemmel őrizzük.</p>
+    </div>
+    <div class="card animate-card">
+        <span class="icon">💬</span>
+        <h3>Kapcsolattartás</h3>
+        <p>Chatelhetsz orvosoddal, hogy gyors válaszokat kapj.</p>
+    </div>
+</section>
