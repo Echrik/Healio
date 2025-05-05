@@ -39,7 +39,7 @@
 		const data = await response.json()
 
 
-		TimeSelect.innerHTML = data.map(time => `<option value=${time}>${time}</option>`)
+		TimeSelect.innerHTML = data.map(time => `<option value=${time}>${time.split(':').slice(0, 2).join(':')}</option>`)
 	}
 
 </script>
