@@ -36,6 +36,7 @@
                     @if (User.IsInRole("patient"))
                     {
                         <li><a asp-page="/BookAppointment">Időpontfoglalás</a></li>
+                        <li><a asp-page="/MedicalRecord">Diagnózisok</a></li>
                     }
                     @if (User.IsInRole("doctor"))
                     {
