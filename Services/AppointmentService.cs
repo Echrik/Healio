@@ -66,13 +66,6 @@ namespace Healio.Services
             _context.Appointments.Add(appointment);
             return _context.SaveChanges() > 0;
         }
-        public bool RecordHealthData(HealthData healthData)
-        {
-            if (_context.HealthData.Contains(healthData))
-                return false;
-            _context.HealthData.Add(healthData);
-            return _context.SaveChanges() > 0;
-        }
         public Appointment GetAppointmentById(int id)
         {
             return _context.Appointments

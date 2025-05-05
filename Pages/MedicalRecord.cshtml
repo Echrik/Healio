@@ -1,0 +1,36 @@
+﻿@page
+@model Healio.Pages.MedicalRecordModel
+@{
+    ViewData["Title"] = "Medical Records";
+}
+
+<div class="container">
+    <h2>Your Medical Records</h2>
+
+    @if (Model.HealthDataList.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data Type</th>
+                    <th>Value</th>
+                    <th>Recorded At</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.HealthDataList)
+                {
+                    <tr>
+                        <td>@record.DataType</td>
+                        <td>@record.Value</td>
+                        <td>@record.RecordedAt.ToString("g")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No medical records found.</p>
+    }
+</div>

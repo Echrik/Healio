@@ -10,10 +10,12 @@ namespace Healio.Pages
     public class HealthDataCheckoutModel : PageModel
     {
         private readonly AppointmentService _appointmentService;
+        private readonly HealthDataService _healthDataService;
 
-        public HealthDataCheckoutModel(AppointmentService appointmentService)
+        public HealthDataCheckoutModel(AppointmentService appointmentService, HealthDataService healthDataService)
         {
             _appointmentService = appointmentService;
+            _healthDataService = healthDataService;
         }
 
         [BindProperty]
@@ -48,7 +50,7 @@ namespace Healio.Pages
                 return NotFound();
             }
 
-            _appointmentService.RecordHealthData(new HealthData
+            _healthDataService.RecordHealthData(new HealthData
             {
                 PatientId = appointment.PatientId,
                 DataType = DataType,

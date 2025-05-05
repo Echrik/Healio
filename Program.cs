@@ -23,6 +23,7 @@ namespace Healio
 
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<AppointmentService>();
+            builder.Services.AddScoped<HealthDataService>();
             builder.Services.AddScoped<MessageService>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllers();
