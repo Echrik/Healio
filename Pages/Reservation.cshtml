@@ -40,6 +40,11 @@
                         <td>@reservation.Id</td>
                         <td>@reservation.AppointmentDate.ToString("yyyy-MM-dd HH:mm")</td>
                         <td>@reservation.Status</td>
+                        <td>
+                            <a asp-page="/HealthDataCheckout" asp-route-appointmentId="@reservation.Id" class="btn btn-primary">
+                                Checkout
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>

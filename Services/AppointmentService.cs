@@ -44,7 +44,7 @@ namespace Healio.Services
             var patId = _context.PatientProfiles.Where(d => d.UserId == patientId).FirstOrDefault().Id;
 
             return _context.Appointments
-                .Where(a => a.DoctorId == docId && a.PatientId == patId)
+                .Where(a => a.DoctorId == docId && a.PatientId == patId && a.Status == "pending")
                 .Include(a => a.Patient)
                 .Include(a => a.Doctor)
                 .ToList();
@@ -64,6 +64,28 @@ namespace Healio.Services
             if (_context.Appointments.Contains(appointment))
                 return false;
             _context.Appointments.Add(appointment);
+            return _context.SaveChanges() > 0;
+        }
+        public bool RecordHealthData(HealthData healthData)
+        {
+            if (_context.HealthData.Contains(healthData))
+                return false;
+            _context.HealthData.Add(healthData);
+            return _context.SaveChanges() > 0;
+        }
+        public Appointment GetAppointmentById(int id)
+        {
+            return _context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .FirstOrDefault(a => a.Id == id);
+        }
+        public bool CloseAppointment(int id)
+        {
+            var appointment = _context.Appointments.Find(id);
+            if (appointment == null)
+                return false;
+            appointment.Status = "closed";
             return _context.SaveChanges() > 0;
         }
     }
