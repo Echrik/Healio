@@ -2,6 +2,7 @@ using Healio.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Buffers.Text;
 using System.Security.Claims;
 
 namespace Healio.Pages
@@ -24,7 +25,7 @@ namespace Healio.Pages
             var user = await _userService.AuthenticateUserAsync(Email, Password);
             if (user == null)
             {
-                Console.WriteLine("Invalid email or password");
+                ModelState.AddModelError(string.Empty,"Érvénytelen email vagy jelszó!");
                 return Page();
             }
 

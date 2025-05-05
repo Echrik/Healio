@@ -63,9 +63,14 @@
     }
 
 .validation-error {
-    margin-top: 10px;
-    color: #FF8A80;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #1E2A38;
+    border: 1px solid #4CAF50;
+    border-radius: 6px;
+    color: #A5D6A7;
     font-weight: 500;
+    font-size: 1rem;
     text-align: center;
 }
 
@@ -73,5 +78,20 @@
     .login-container {
         width: 90%;
         padding: 20px;
+    }
+
+        .login-container h2 {
+            font-size: 1.6rem;
+        }
+
+    .form-group input,
+    .login-form button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .validation-error {
+        font-size: 0.9rem;
+        padding: 8px;
     }
 }
