@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,6 +11,7 @@
 
     <!-- Fő stílus (globális) -->
     <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="stylesheet" href="~/css/chat.css" />
 
     <!-- Oldalspecifikus stílusok -->
     @RenderSection("Styles", required: false)
@@ -44,11 +46,32 @@
             </ul>
         </nav>
     </header>
+
     <main>
         @RenderBody()
     </main>
+
     <footer>
         <p>© 2025 - Healio - Siheder Legények</p>
     </footer>
+
+    <div id="chat-float-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button onclick="toggleChat()" class="btn btn-primary rounded-circle" style="width: 60px; height: 60px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+            💬
+        </button>
+    </div>
+
+    <div id="chat-box" class="chat-box">
+        <select id="partner-select" class="form-control mb-2"></select>
+        <div id="chat-messages" class="chat-messages"></div>
+        <form id="chat-form" class="mt-2 d-flex">
+            <input type="text" id="chat-input" class="form-control me-2" placeholder="Írj üzenetet..." required />
+            <button type="submit" class="btn btn-primary">Küld</button>
+        </form>
+    </div>
+
+
+    <script src="~/js/chat.js"></script>
+
 </body>
 </html>

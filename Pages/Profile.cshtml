@@ -2,6 +2,7 @@
 @model Healio.Pages.ProfileModel
 @{
 	ViewData["Title"] = "Profil";
+	Layout = "_Layout";
 	var (name, email, role) = Model.userDTO;
 	var (specialization, clinicAddress) = Model.docDTO;
 	var (dateOfBirth, medicalHistory) = Model.patDTO;

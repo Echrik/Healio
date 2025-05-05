@@ -12,6 +12,7 @@ namespace Healio.Pages
         public User User { get; set; }
         [BindProperty]
         public string Password { get; set; }
+        [BindProperty]
         public string Name { get; set; }
         public RegisterModel(UserService userService)
         {

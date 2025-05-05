@@ -23,6 +23,9 @@ namespace Healio
 
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<AppointmentService>();
+            builder.Services.AddScoped<MessageService>();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(Program));
@@ -52,6 +55,8 @@ namespace Healio
             app.UseAuthorization();
 
             app.MapRazorPages();
+
+            app.MapControllers();
 
             app.Run();
         }
