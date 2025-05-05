@@ -84,6 +84,10 @@ namespace Healio.Services
         {
             return _context.PatientProfiles.Where(p => p.UserId == id).FirstOrDefault();
         }
+        public PatientProfile GetPatientByUserId(string id)
+        {
+            return _context.PatientProfiles.Where(p => p.UserId.ToString() == id).FirstOrDefault();
+        }
 
         public bool RegisterDoctor(DoctorProfile docprof)
         {

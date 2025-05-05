@@ -1,25 +1,41 @@
 ﻿@page
 @model Healio.Pages.BookAppointmentModel
 @{
+	ViewData["Title"] = "Időpont";
 }
 <div class="container">
-    <h2>Időpontfoglalás</h2>
-    <form>
-        <div>
-            <label>Orvos:</label>
-            <select asp-for="SelectedDoctorId" asp-items="@(new SelectList(Model.Doctors, "Id", "Name"))"></select>
-        </div>
-        <div>
-            <label>Dátum:</label>
-            <input type="date" required />
-        </div>
-        <div>
-            <label>Időpont:</label>
-            <select>
-                <option value="09:00">09:00</option>
-                <option value="09:30">09:30</option>
-            </select>
-        </div>
-        <button type="submit">Foglalás</button>
-    </form>
+	<h2>Időpontfoglalás</h2>
+	<form method="post">
+		<div>
+			<label>Orvos:</label>
+			<select id="DoctorSelect" asp-for="SelectedDoctorId" asp-items="@(new SelectList(Model.Doctors, "Id", "Name"))"></select>
+		</div>
+		<div>
+			<label>Dátum:</label>
+			<input id="DateSelect" type="date" asp-for="SelectedDate" required />
+		</div>
+		<div>
+			<label>Időpont:</label>
+			<select id="TimeSelect" asp-for="SelectedTime" required> </select>
+		</div>
+		<button type="submit">Foglalás</button>
+	</form>
 </div>
+<script>
+	const DoctorSelect = document.getElementById("DoctorSelect");
+	const DateSelect = document.getElementById("DateSelect");
+	const TimeSelect = document.getElementById("TimeSelect");
+	DoctorSelect.addEventListener("change", fetchDoctorTimes)
+	DateSelect.addEventListener("change", fetchDoctorTimes)
+	async function fetchDoctorTimes(){
+		  const response = await fetch("/api/appointment/Times", { method: 'POST', headers: { 'Content-Type': 'application/json'},
+		body: JSON.stringify({ doctorId: DoctorSelect.value, date: DateSelect.value })})
+		console.log(response)
+
+		const data = await response.json()
+
+
+		TimeSelect.innerHTML = data.map(time => `<option value=${time}>${time}</option>`)
+	}
+
+</script>

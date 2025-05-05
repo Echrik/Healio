@@ -1,5 +1,7 @@
 ﻿using Healio.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Healio.Services
 {
@@ -12,42 +14,36 @@ namespace Healio.Services
             _context = context;
         }
 
-        public async Task<List<DoctorProfile>> GetDoctorsAsync()
+        public List<User> GetDoctors()
         {
-            return await _context.DoctorProfiles.ToListAsync();
+            return _context.Users.Where(d => d.Role == "doctor").ToList();
         }
 
-        //public async Task<List<DateTime>> GetAvailableBookingTimesAsync(int doctorId, DateTime date)
-        //{
-        //    // Example logic: Fetch available times for a doctor on a specific date
-        //    var doctorSchedule = await _context.DoctorSchedules
-        //        .FirstOrDefaultAsync(ds => ds.DoctorId == doctorId && ds.Date == date);
+        public List<TimeSpan> GetAvailableTimes(int doctorId, string day)
+        {
+            List<TimeSpan> availableTimes = new List<TimeSpan>();
+            var docId = _context.DoctorProfiles.Where(d => d.UserId == doctorId).FirstOrDefault().Id;
+            DoctorSchedule schedule = _context.DoctorSchedules.Where(d => d.DoctorId == docId && d.DayOfWeek == day).FirstOrDefault();
 
-        //    if (doctorSchedule == null)
-        //    {
-        //        return new List<DateTime>(); // No schedule found
-        //    }
+            if (schedule == null)
+            {
+                return new List<TimeSpan>();
+            }
 
-        //    // Return available times (assuming DoctorSchedule has a collection of available slots)
-        //    return doctorSchedule.AvailableTimes;
-        //}
+            for (var time = schedule.StartTime; time < schedule.EndTime; time = time.Add(TimeSpan.FromMinutes(30)))
+            {
+                availableTimes.Add(time);
+            }
 
-        //public async Task<bool> BookAppointmentAsync(Appointment appointment)
-        //{
-        //    // Check if the time slot is still available
-        //    var existingAppointment = await _context.Appointments
-        //        .FirstOrDefaultAsync(a => a.DoctorId == appointment.DoctorId &&
-        //                                  a.Date == appointment.Date &&
-        //                                  a.Time == appointment.Time);
+            return availableTimes;
+        }
 
-        //    if (existingAppointment != null)
-        //    {
-        //        return false; // Time slot already booked
-        //    }
-
-        //    _context.Appointments.Add(appointment);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
+        public bool BookAppointment(Appointment appointment)
+        {
+            if (_context.Appointments.Contains(appointment))
+                return false;
+            _context.Appointments.Add(appointment);
+            return _context.SaveChanges() > 0;
+        }
     }
 }

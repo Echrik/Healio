@@ -11,7 +11,6 @@ namespace Healio.Models
         public int DoctorId { get; set; }
         [Required]
         public DateTime AppointmentDate { get; set; }
-        [Required]
         [StringLength(50)]
         public string Status { get; set; } = "pending"; // "pending", "confirmed", "cancelled"
         [Required]

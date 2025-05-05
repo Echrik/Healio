@@ -29,6 +29,7 @@ namespace Healio
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddControllers();
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
@@ -55,6 +56,7 @@ namespace Healio
             app.UseAuthorization();
 
             app.MapRazorPages();
+            app.MapControllers();
 
             app.MapControllers();
 

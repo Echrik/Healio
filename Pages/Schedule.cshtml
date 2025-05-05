@@ -78,47 +78,44 @@
         <p class="no-schedules">Nincs még felvitt időpont.</p>
     }
 </div>
+<script>
+    const startTime = document.getElementById("startTime");
+    const endTime = document.getElementById("endTime");
 
-@section Scripts {
-    <script>
-        const startTime = document.getElementById("startTime");
-        const endTime = document.getElementById("endTime");
+    function roundTimeInput(event) {
+        const input = event.target;
+        let [hour, minute] = input.value.split(':').map(Number);
 
-        function roundTimeInput(event) {
-            const input = event.target;
-            let [hour, minute] = input.value.split(':').map(Number);
-
-            if (minute < 30) {
-                minute = 30;
-            } else {
-                minute = 0;
-                hour = (hour + 1) % 24;
-            }
-
-            input.value = String(hour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
+        if (minute < 30) {
+            minute = 30;
+        } else {
+            minute = 0;
+            hour = (hour + 1) % 24;
         }
 
-        startTime.addEventListener('change', roundTimeInput);
-        endTime.addEventListener('change', roundTimeInput);
+        input.value = String(hour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
+    }
 
-        endTime.addEventListener('change', e => {
-            const [eHour, eMin] = e.target.value.split(':').map(Number);
-            const [sHour, sMin] = startTime.value.split(':').map(Number);
-            if (eHour < sHour || (eHour === sHour && eMin <= sMin)) {
-                e.target.value = startTime.value;
-            }
-        });
+    startTime.addEventListener('change', roundTimeInput);
+    endTime.addEventListener('change', roundTimeInput);
 
-        startTime.addEventListener('change', e => {
-            const [sHour, sMin] = e.target.value.split(':').map(Number);
-            const [eHour, eMin] = endTime.value.split(':').map(Number);
-            if (sHour > eHour || (sHour === eHour && sMin >= eMin)) {
-                e.target.value = endTime.value;
-            }
-        });
+    endTime.addEventListener('change', e => {
+        const [eHour, eMin] = e.target.value.split(':').map(Number);
+        const [sHour, sMin] = startTime.value.split(':').map(Number);
+        if (eHour < sHour || (eHour === sHour && eMin <= sMin)) {
+            e.target.value = startTime.value;
+        }
+    });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            endTime.value = '23:30';
-        });
-    </script>
-}
+    startTime.addEventListener('change', e => {
+        const [sHour, sMin] = e.target.value.split(':').map(Number);
+        const [eHour, eMin] = endTime.value.split(':').map(Number);
+        if (sHour > eHour || (sHour === eHour && sMin >= eMin)) {
+            e.target.value = endTime.value;
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        endTime.value = '23:30';
+    });
+</script>
