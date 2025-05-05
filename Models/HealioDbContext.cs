@@ -9,7 +9,6 @@ namespace Healio.Models
         public DbSet<User> Users { get; set; }
         public DbSet<PatientProfile> PatientProfiles { get; set; }
         public DbSet<DoctorProfile> DoctorProfiles { get; set; }
-        public DbSet<Log> Logs { get; set; }
         public DbSet<HealthData> HealthData { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
