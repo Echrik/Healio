@@ -38,6 +38,27 @@ namespace Healio.Services
             return availableTimes;
         }
 
+        public List<Appointment> GetReservationsForDoctorAndPatient(int doctorId, int patientId)
+        {
+            var docId = _context.DoctorProfiles.Where(d => d.UserId == doctorId).FirstOrDefault().Id;
+            var patId = _context.PatientProfiles.Where(d => d.UserId == patientId).FirstOrDefault().Id;
+
+            return _context.Appointments
+                .Where(a => a.DoctorId == docId && a.PatientId == patId)
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .ToList();
+        }
+        public List<PatientProfile> GetPatientsForDoctor(int doctorId)
+        {
+            var docId = _context.DoctorProfiles.Where(d => d.UserId == doctorId).FirstOrDefault().Id;
+            return _context.Appointments
+                .Where(a => a.DoctorId == docId)
+                .Include(a => a.Patient.User)
+                .Select(a => a.Patient)
+                .Distinct()
+                .ToList();
+        }
         public bool BookAppointment(Appointment appointment)
         {
             if (_context.Appointments.Contains(appointment))
