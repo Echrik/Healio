@@ -19,11 +19,11 @@ namespace Healio.Services
             return _context.Users.Where(d => d.Role == "doctor").ToList();
         }
 
-        public List<TimeSpan> GetAvailableTimes(int doctorId, string day)
+        public List<TimeSpan> GetAvailableTimes(int doctorId, DateTime date)
         {
             List<TimeSpan> availableTimes = new List<TimeSpan>();
             var docId = _context.DoctorProfiles.Where(d => d.UserId == doctorId).FirstOrDefault().Id;
-            DoctorSchedule schedule = _context.DoctorSchedules.Where(d => d.DoctorId == docId && d.DayOfWeek == day).FirstOrDefault();
+            DoctorSchedule schedule = _context.DoctorSchedules.Where(d => d.DoctorId == docId && d.DayOfWeek == date.DayOfWeek.ToString()).FirstOrDefault();
 
             if (schedule == null)
             {
@@ -35,7 +35,12 @@ namespace Healio.Services
                 availableTimes.Add(time);
             }
 
-            availableTimes.RemoveAll(t => _context.Appointments.Any(a => a.DoctorId == docId && a.AppointmentDate.TimeOfDay == t && a.Status == "pending"));
+            var pendingAppointments = _context.Appointments
+                .Where(a => a.DoctorId == docId && a.AppointmentDate.Date == date.Date && a.Status == "pending")
+                .Select(a => a.AppointmentDate.TimeOfDay)
+                .ToHashSet();
+
+            availableTimes.RemoveAll(t => pendingAppointments.Contains(t));
 
             return availableTimes;
         }

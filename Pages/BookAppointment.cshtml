@@ -32,9 +32,9 @@
 	DoctorSelect.addEventListener("change", fetchDoctorTimes)
 	DateSelect.addEventListener("change", fetchDoctorTimes)
 	async function fetchDoctorTimes(){
-		  const response = await fetch("/api/appointment/Times", { method: 'POST', headers: { 'Content-Type': 'application/json'},
-		body: JSON.stringify({ doctorId: DoctorSelect.value, date: DateSelect.value })})
-		console.log(response)
+		const response = await fetch("/api/appointment/Times", { method: 'POST', headers: { 'Content-Type': 'application/json'},
+			body: JSON.stringify({ doctorId: DoctorSelect.value, date: DateSelect.value })})
+			console.log(response)
 
 		const data = await response.json()
 

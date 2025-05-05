@@ -17,7 +17,7 @@ namespace Healio.Controllers
         [Route("Times")]
         public IActionResult GetDoctorTimes([FromBody] TimesRequestDTO TimesRequest)
         {
-            var response = _appointmentService.GetAvailableTimes(TimesRequest.DoctorId, TimesRequest.Date.DayOfWeek.ToString());
+            var response = _appointmentService.GetAvailableTimes(TimesRequest.DoctorId, TimesRequest.Date);
             Console.WriteLine(response.Count);
             Console.WriteLine(TimesRequest.Date.DayOfWeek.ToString());
             Console.WriteLine(TimesRequest.DoctorId);
