@@ -48,10 +48,9 @@ namespace Healio.Services
         public List<Appointment> GetReservationsForDoctorAndPatient(int doctorId, int patientId)
         {
             var docId = _context.DoctorProfiles.Where(d => d.UserId == doctorId).FirstOrDefault().Id;
-            var patId = _context.PatientProfiles.Where(d => d.UserId == patientId).FirstOrDefault().Id;
 
             return _context.Appointments
-                .Where(a => a.DoctorId == docId && a.PatientId == patId && a.Status == "pending")
+                .Where(a => a.DoctorId == docId && a.PatientId == patientId && a.Status == "pending")
                 .Include(a => a.Patient)
                 .Include(a => a.Doctor)
                 .ToList();
