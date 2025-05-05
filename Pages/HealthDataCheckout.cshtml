@@ -1,0 +1,20 @@
+﻿@page "{appointmentId:int}"
+@model Healio.Pages.HealthDataCheckoutModel
+@{
+    ViewData["Title"] = "Vizsgálat";
+}
+
+<div class="container">
+    <h2>Health Data Checkout</h2>
+    <form method="post">
+        <div class="form-group">
+            <label for="DataType">Data Type</label>
+            <input type="text" id="DataType" name="DataType" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="Value">Value</label>
+            <textarea id="Value" name="Value" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

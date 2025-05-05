@@ -1,0 +1,57 @@
+﻿@page "{PatientId:int?}"
+@model Healio.Pages.ReservationModel
+@{
+    ViewData["Title"] = "Patient Reservations";
+}
+
+<div class="container">
+    <h2>Reservations</h2>
+
+    <form method="get">
+        <div>
+            <label for="PatientSelect">Select Patient:</label>
+            <select id="PatientSelect" name="PatientId" asp-for="PatientId" class="form-control">
+                <option value="">-- Select a Patient --</option>
+                @foreach (var patient in Model.Patients)
+                {
+                    <option value="@patient.Id" selected="@(Model.PatientId == patient.Id ? "selected" : null)">
+                        @patient.User.Name
+                    </option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">View Reservations</button>
+    </form>
+
+    @if (Model.Reservations != null && Model.Reservations.Any())
+    {
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>Reservation ID</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model.Reservations)
+                {
+                    <tr>
+                        <td>@reservation.Id</td>
+                        <td>@reservation.AppointmentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@reservation.Status</td>
+                        <td>
+                            <a asp-page="/HealthDataCheckout" asp-route-appointmentId="@reservation.Id" class="btn btn-primary">
+                                Checkout
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Model.PatientId > 0)
+    {
+        <p>No reservations found for the selected patient.</p>
+    }
+</div>

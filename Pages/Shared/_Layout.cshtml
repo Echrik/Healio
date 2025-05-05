@@ -39,7 +39,8 @@
                     }
                     @if (User.IsInRole("doctor"))
                     {
-                        <li><a asp-page="/Schedule">Schedule</a></li>
+                        <li><a asp-page="/Schedule">Beosztás</a></li>
+                        <li><a asp-page="/Reservation">Foglalások</a></li>
                     }
                     <li><a asp-page="/Logout">Kijelentkezés</a></li>
                 }
